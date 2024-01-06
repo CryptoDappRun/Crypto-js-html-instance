@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypt/Decrypt using Crypto-JS and Bootstrap</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+    <h2 class="mb-4">Crypto-JS Encryption/Decryption</h2>
+
+    <form id="cryptoForm">
+        <div class="form-group">
+            <label for="fromText">From:</label>
+            <input type="text" class="form-control" id="fromText" placeholder="Enter text to encode">
+        </div>
+
+        <div class="form-group">
+            <label for="toText">To:</label>
+            <input type="text" class="form-control" id="toText" placeholder="Decoded/Encoded text will appear here" >
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter encryption password">
+        </div>
+
+        <div class="form-group">
+            <label for="algorithm">Encryption Algorithm:</label>
+            <select class="form-control" id="algorithm">
+                <option value="AES">AES (Advanced Encryption Standard)</option>
+                <option value="DES">DES (Data Encryption Standard)</option>
+                <option value="TripleDES">TripleDES (Triple Data Encryption Standard)</option>
+                <option value="RC4">RC4 (Rivest Cipher 4)</option>
+
+                <!-- Add more algorithms as needed -->
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="encrypt()">Encrypt</button>
+        <button type="button" class="btn btn-danger" onclick="decrypt()">Decrypt</button>
+    </form>
+
+    <!-- Include Crypto-JS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.js"></script>
+
+    <script>
+        function encrypt() {
+            const fromText = document.getElementById('fromText').value;
+            const password = document.getElementById('password').value;
+            const algorithm = document.getElementById('algorithm').value;
+
+            const encryptedText = CryptoJS[algorithm].encrypt(fromText, password);
+            document.getElementById('toText').value = encryptedText.toString();
+        }
+
+        function decrypt() {
+            const toText = document.getElementById('toText').value;
+            const password = document.getElementById('password').value;
+            const algorithm = document.getElementById('algorithm').value;
+
+            const decryptedText = CryptoJS[algorithm].decrypt(toText, password).toString(CryptoJS.enc.Utf8);
+            document.getElementById('fromText').value = decryptedText;
+        }
+    </script>
+</body>
+</html>
